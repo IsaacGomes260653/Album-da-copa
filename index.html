@@ -12,23 +12,34 @@
 </head>
 <body>
 
+<div class="bg-blobs" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <span class="blob b4"></span><span class="blob b5"></span>
+</div>
+
 <div id="app">
 
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand" onclick="goHome()">
-        <span class="brand-ball">⚽</span>
+        <span class="brand-ball">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21" fill="#fff" stroke="#151515" stroke-width="3"/><path fill="#151515" d="M24 12l7 5-2.6 8.2h-8.8L17 17z"/><path fill="#151515" d="M9 20l4-8 3 1-1 8zM9 20l3 10 6-3-2-8zM39 20l-4-8-3 1 1 8zM39 20l-3 10-6-3 2-8zM24 40l-6-3 1-7h10l1 7z"/></svg>
+        </span>
         <div class="brand-txt">
           <div class="brand-t">Meu Álbum</div>
           <div class="brand-s">Copa do Mundo 2026</div>
         </div>
       </div>
+      <button class="album-switcher" id="albumSwitcher" onclick="toggleAlbumMenu()">
+        <span id="albumSwitcherName">Meu Álbum</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
       <div class="topbar-search">
         <input id="searchInput" type="search" placeholder="Buscar jogador ou seleção…" autocomplete="off">
       </div>
       <nav class="topbar-nav">
         <button class="navbtn" data-view="home" onclick="setView('home')">Álbum</button>
-        <button class="navbtn" data-view="trade" onclick="setView('trade')">Repetidas</button>
+        <button class="navbtn" data-view="trade" onclick="setView('trade')">Trocas</button>
       </nav>
     </div>
     <div class="progressbar-wrap">
@@ -37,12 +48,17 @@
     </div>
   </header>
 
+  <div id="albumMenu" class="album-menu hidden"></div>
+
   <main id="main"></main>
 
   <div id="searchResults" class="search-overlay hidden"></div>
+  <div id="modalRoot"></div>
+  <div id="hoverPreview" class="hover-preview hidden"></div>
 
 </div>
 
+<script src="flags.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 </body>
