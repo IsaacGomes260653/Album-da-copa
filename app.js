@@ -1,5 +1,5 @@
 /* ===================== estado ===================== */
-const STORE_KEY = 'wc2026-album-v1';
+const STORE_KEY = 'wc2026-album-v2';
 let state = loadState();
 
 function loadState(){
@@ -11,12 +11,12 @@ function loadState(){
 }
 function saveState(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
 
-function key(teamId,no){ return teamId+'_'+no; }
-function getSticker(teamId,no){
-  return state.stickers[key(teamId,no)] || { owned:false, dup:0 };
+function key(groupId,no){ return groupId+'_'+no; }
+function getSticker(groupId,no){
+  return state.stickers[key(groupId,no)] || { owned:false, dup:0 };
 }
-function setSticker(teamId,no,patch){
-  const k = key(teamId,no);
+function setSticker(groupId,no,patch){
+  const k = key(groupId,no);
   const cur = state.stickers[k] || { owned:false, dup:0 };
   const next = Object.assign({}, cur, patch);
   if(!next.owned) next.dup = 0;
@@ -24,30 +24,30 @@ function setSticker(teamId,no,patch){
   else state.stickers[k] = next;
   saveState();
 }
-function toggleOwned(teamId,no){
-  const s = getSticker(teamId,no);
-  setSticker(teamId,no,{ owned: !s.owned });
+function toggleOwned(groupId,no){
+  const s = getSticker(groupId,no);
+  setSticker(groupId,no,{ owned: !s.owned });
 }
-function changeDup(teamId,no,delta){
-  const s = getSticker(teamId,no);
+function changeDup(groupId,no,delta){
+  const s = getSticker(groupId,no);
   if(!s.owned) return;
   const dup = Math.max(0, (s.dup||0)+delta);
-  setSticker(teamId,no,{ dup });
+  setSticker(groupId,no,{ dup });
 }
 
 /* ===================== helpers de dados ===================== */
 const TEAMS_BY_ID = {};
 WC2026_TEAMS.forEach(t=>TEAMS_BY_ID[t.id]=t);
+const SPECIALS_GROUP = { id:'specials', name:'Especiais', code:'FWC', c1:'#151515', c2:'#3a3a3a', players: WC2026_SPECIALS };
 
-const POS_LABEL = { GK:'Gol', DF:'Zaga', MF:'Meio', FW:'Ataque' };
-
-function teamOwnedCount(team){
-  let n=0; team.players.forEach(p=>{ if(getSticker(team.id,p.no).owned) n++; });
+function groupOwnedCount(group){
+  let n=0; group.players.forEach(p=>{ if(getSticker(group.id,p.no).owned) n++; });
   return n;
 }
 function globalCounts(){
   let owned=0, total=0;
-  WC2026_TEAMS.forEach(t=>{ total+=t.players.length; owned+=teamOwnedCount(t); });
+  WC2026_TEAMS.forEach(t=>{ total+=t.players.length; owned+=groupOwnedCount(t); });
+  total += SPECIALS_GROUP.players.length; owned += groupOwnedCount(SPECIALS_GROUP);
   return { owned, total };
 }
 function normalize(s){
@@ -58,6 +58,7 @@ function normalize(s){
 function goHome(){ location.hash = '#/'; }
 function setView(v){ location.hash = v==='trade' ? '#/trade' : '#/'; }
 function openTeam(id){ location.hash = '#/team/'+id; }
+function openSpecials(){ location.hash = '#/team/specials'; }
 
 window.addEventListener('hashchange', route);
 window.addEventListener('DOMContentLoaded', ()=>{ route(); updateGlobalBar(); });
@@ -90,17 +91,19 @@ function updateGlobalBar(){
 function renderHome(){
   const main = document.getElementById('main');
   const {owned,total} = globalCounts();
-  const teamsComplete = WC2026_TEAMS.filter(t=>teamOwnedCount(t)===t.players.length).length;
+  const teamsComplete = WC2026_TEAMS.filter(t=>groupOwnedCount(t)===t.players.length).length;
   let dupTotal = 0;
   Object.values(state.stickers).forEach(s=>{ dupTotal += (s.dup||0); });
 
   const groups = {};
   WC2026_TEAMS.forEach(t=>{ (groups[t.group] = groups[t.group]||[]).push(t); });
 
+  const spOwned = groupOwnedCount(SPECIALS_GROUP);
+
   let html = `
   <div class="hero">
-    <h1>Meu Álbum da Copa</h1>
-    <p>Marque as figurinhas que você já colou, controle as repetidas e organize suas trocas — Copa do Mundo FIFA 2026, com os 48 elencos e números oficiais.</p>
+    <h1><span class="ball">⚽</span> Meu Álbum da Copa</h1>
+    <p>Marque as figurinhas que você já colou, controle as repetidas e organize suas trocas — Copa do Mundo FIFA 2026, 980 figurinhas na ordem oficial do álbum.</p>
   </div>
   <div class="stats-row">
     <div class="stat-box"><div class="v">${owned}</div><div class="k">Coladas</div></div>
@@ -108,17 +111,24 @@ function renderHome(){
     <div class="stat-box"><div class="v">${dupTotal}</div><div class="k">Repetidas</div></div>
     <div class="stat-box"><div class="v">${teamsComplete}/48</div><div class="k">Álbuns completos</div></div>
   </div>
+  <div class="specials-banner" onclick="openSpecials()">
+    <div class="icon">✦</div>
+    <div>
+      <div class="t">Figurinhas Especiais</div>
+      <div class="s">Escudo Panini, emblema, mascote, bola e a história das Copas</div>
+    </div>
+    <div class="prog">${spOwned}/${SPECIALS_GROUP.players.length}</div>
+  </div>
   <div class="groups-grid">`;
 
   Object.keys(groups).sort().forEach(g=>{
     html += `<div class="group-block"><h2>Grupo ${g}</h2><div class="teams-grid">`;
     groups[g].forEach(t=>{
-      const oc = teamOwnedCount(t);
+      const oc = groupOwnedCount(t);
       const pct = Math.round(oc/t.players.length*100);
       const complete = oc===t.players.length;
       html += `
       <div class="team-card ${complete?'complete':''}" style="--c1:${t.c1};--c2:${t.c2}" onclick="openTeam('${t.id}')">
-        <div class="bg"></div>
         <div class="team-badge">${t.code}</div>
         <div class="team-name">${t.name}</div>
         <div class="team-progress"><div class="team-progress-fill" style="width:${pct}%"></div></div>
@@ -131,21 +141,22 @@ function renderHome(){
   main.innerHTML = html;
 }
 
-/* ===================== página da seleção ===================== */
-let curPosFilter = 'ALL';
+/* ===================== página da seleção / especiais ===================== */
 function renderTeam(teamId){
-  const t = TEAMS_BY_ID[teamId];
+  const t = teamId==='specials' ? SPECIALS_GROUP : TEAMS_BY_ID[teamId];
   const main = document.getElementById('main');
-  if(!t){ main.innerHTML = '<p>Seleção não encontrada.</p>'; return; }
-  curPosFilter = 'ALL';
+  if(!t){ main.innerHTML = '<p>Não encontrado.</p>'; return; }
   main.innerHTML = teamPageShell(t);
   renderStickerGrid(t);
 }
 
 function teamPageShell(t){
-  const oc = teamOwnedCount(t);
+  const oc = groupOwnedCount(t);
   let dup = 0;
   t.players.forEach(p=>{ dup += getSticker(t.id,p.no).dup||0; });
+  const subtitle = t.id==='specials'
+    ? 'Emblema, mascote, bola oficial e a história das Copas do Mundo'
+    : `Grupo ${t.group} · figurinhas 1 a 20`;
   return `
   <button class="back-btn" onclick="goHome()">← Voltar ao álbum</button>
   <div class="team-header" style="--team-c1:${t.c1};--team-c2:${t.c2}">
@@ -153,7 +164,7 @@ function teamPageShell(t){
       <div class="team-header-flag">${t.code}</div>
       <div>
         <div class="team-header-name font-head">${t.name}</div>
-        <div class="team-header-meta">Grupo ${t.group} · Técnico: ${t.coach||'—'}</div>
+        <div class="team-header-meta">${subtitle}</div>
       </div>
     </div>
     <div class="team-header-stats">
@@ -162,81 +173,54 @@ function teamPageShell(t){
       <div class="ths"><div class="v">${dup}</div><div class="k">Repetidas</div></div>
     </div>
   </div>
-  <div class="pos-tabs" id="posTabs"></div>
   <div class="sticker-grid" id="stickerGrid"></div>
   `;
 }
 
 function renderStickerGrid(t){
-  const tabsEl = document.getElementById('posTabs');
-  const tabs = [['ALL','Todos'],['GK','Goleiros'],['DF','Zagueiros'],['MF','Meio-campo'],['FW','Atacantes']];
-  tabsEl.innerHTML = tabs.map(([k,label])=>
-    `<button class="pos-tab ${curPosFilter===k?'active':''}" onclick="filterPos('${t.id}','${k}')">${label}</button>`
-  ).join('');
-
   const grid = document.getElementById('stickerGrid');
-  const players = t.players.filter(p=> curPosFilter==='ALL' || p.pos===curPosFilter);
-  grid.innerHTML = players.map(p=>{
+  grid.innerHTML = t.players.map(p=>{
     const s = getSticker(t.id,p.no);
+    const kindClass = p.kind ? 'kind-'+p.kind : '';
     return `
-    <div class="sticker ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" id="stk_${t.id}_${p.no}">
-      <div class="sticker-top" onclick="toggleOwned('${t.id}',${p.no}); refreshSticker('${t.id}',${p.no})">
-        <div class="sticker-no">#${p.no}</div>
-        <div class="sticker-pos">${POS_LABEL[p.pos]||p.pos}</div>
+    <div class="sticker ${kindClass} ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" onclick="toggleOwned('${t.id}',${JSON.stringify(p.no)});refreshSticker('${t.id}',${JSON.stringify(p.no)})">
+      ${p.kind==='logo'?'<span class="sticker-badge">✦ BRILHANTE</span>':''}
+      <div class="sticker-top">
+        <div class="sticker-no">${typeof p.no==='number'?'#'+p.no:p.no}</div>
+        <div class="sticker-check"></div>
       </div>
-      <div class="sticker-name" onclick="toggleOwned('${t.id}',${p.no}); refreshSticker('${t.id}',${p.no})">${p.name}${p.cap?'<div class="sticker-cap">Capitão</div>':''}</div>
-      <div class="sticker-check">${s.owned?'✓ Colada':'Toque para marcar'}</div>
+      <div class="sticker-name">${p.name}</div>
       ${s.owned?`
-      <div class="sticker-dup">
+      <div class="sticker-dup" onclick="event.stopPropagation()">
         <span class="lbl">Repetida</span>
         <div class="stepper">
-          <button onclick="event.stopPropagation();changeDup('${t.id}',${p.no},-1);refreshSticker('${t.id}',${p.no})">–</button>
+          <button onclick="changeDup('${t.id}',${JSON.stringify(p.no)},-1);refreshSticker('${t.id}',${JSON.stringify(p.no)})">–</button>
           <span class="n ${s.dup>0?'has':''}">${s.dup||0}</span>
-          <button onclick="event.stopPropagation();changeDup('${t.id}',${p.no},1);refreshSticker('${t.id}',${p.no})">+</button>
+          <button onclick="changeDup('${t.id}',${JSON.stringify(p.no)},1);refreshSticker('${t.id}',${JSON.stringify(p.no)})">+</button>
         </div>
       </div>`:''}
     </div>`;
   }).join('');
 }
 
-function filterPos(teamId,pos){
-  curPosFilter = pos;
-  renderStickerGrid(TEAMS_BY_ID[teamId]);
-}
-
-function refreshSticker(teamId,no){
-  renderStickerGrid(TEAMS_BY_ID[teamId]);
-  // atualiza cabeçalho (contadores) sem re-renderizar tudo
-  const t = TEAMS_BY_ID[teamId];
+function refreshSticker(teamId){
+  const t = teamId==='specials' ? SPECIALS_GROUP : TEAMS_BY_ID[teamId];
+  renderStickerGrid(t);
   const header = document.querySelector('.team-header');
-  if(header) header.outerHTML = teamPageShellHeaderOnly(t);
+  if(header){
+    const tmp = document.createElement('div');
+    tmp.innerHTML = teamPageShell(t);
+    header.outerHTML = tmp.querySelector('.team-header').outerHTML;
+  }
   updateGlobalBar();
-}
-function teamPageShellHeaderOnly(t){
-  const oc = teamOwnedCount(t);
-  let dup = 0;
-  t.players.forEach(p=>{ dup += getSticker(t.id,p.no).dup||0; });
-  return `<div class="team-header" style="--team-c1:${t.c1};--team-c2:${t.c2}">
-    <div class="team-header-row">
-      <div class="team-header-flag">${t.code}</div>
-      <div>
-        <div class="team-header-name font-head">${t.name}</div>
-        <div class="team-header-meta">Grupo ${t.group} · Técnico: ${t.coach||'—'}</div>
-      </div>
-    </div>
-    <div class="team-header-stats">
-      <div class="ths"><div class="v">${oc}/${t.players.length}</div><div class="k">Coladas</div></div>
-      <div class="ths"><div class="v">${Math.round(oc/t.players.length*100)}%</div><div class="k">Completo</div></div>
-      <div class="ths"><div class="v">${dup}</div><div class="k">Repetidas</div></div>
-    </div>
-  </div>`;
 }
 
 /* ===================== repetidas / trocas ===================== */
 function renderTrade(){
   const main = document.getElementById('main');
   const rows = [];
-  WC2026_TEAMS.forEach(t=>{
+  const allGroups = WC2026_TEAMS.concat([SPECIALS_GROUP]);
+  allGroups.forEach(t=>{
     t.players.forEach(p=>{
       const s = getSticker(t.id,p.no);
       if(s.owned && s.dup>0){
@@ -244,13 +228,13 @@ function renderTrade(){
       }
     });
   });
-  rows.sort((a,b)=> a.team.name.localeCompare(b.team.name) || a.player.no-b.player.no);
+  rows.sort((a,b)=> a.team.name.localeCompare(b.team.name) || (''+a.player.no).localeCompare(''+b.player.no));
 
   if(!rows.length){
     main.innerHTML = `
     <div class="trade-empty">
       <div class="big">Nenhuma repetida ainda</div>
-      Quando você marcar figurinhas repetidas nas páginas das seleções, elas aparecem aqui — prontas pra organizar suas trocas.
+      Quando você marcar figurinhas repetidas nas páginas das seleções (ou nas especiais), elas aparecem aqui — prontas pra organizar suas trocas.
     </div>`;
     return;
   }
@@ -265,7 +249,7 @@ function renderTrade(){
     ${rows.map(r=>`
       <div class="trade-row">
         <span class="tflag" style="--c1:${r.team.c1};--c2:${r.team.c2}">${r.team.code}</span>
-        <span class="tno">#${r.player.no}</span>
+        <span class="tno">${typeof r.player.no==='number'?'#'+r.player.no:r.player.no}</span>
         <div class="tinfo">
           <div class="tteam">${r.team.name}</div>
           <div class="tname">${r.player.name}</div>
@@ -279,7 +263,7 @@ function renderTrade(){
 function copyTradeList(){
   const rows = window._tradeRows||[];
   const lines = ['🔁 Minhas repetidas — Álbum Copa 2026', ''];
-  rows.forEach(r=> lines.push(`${r.team.name} #${r.player.no} ${r.player.name} — ${r.qty}x`));
+  rows.forEach(r=> lines.push(`${r.team.name} ${typeof r.player.no==='number'?'#'+r.player.no:r.player.no} ${r.player.name} — ${r.qty}x`));
   const text = lines.join('\n');
   if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(()=> toast('Lista copiada!')).catch(()=>fallbackCopy(text));
@@ -295,7 +279,7 @@ function toast(msg){
   let el = document.getElementById('toastEl');
   if(!el){
     el = document.createElement('div'); el.id='toastEl';
-    el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#20201c;color:#f4efe2;padding:10px 18px;border-radius:999px;font-weight:700;font-size:13px;z-index:200;box-shadow:0 10px 30px rgba(0,0,0,.3);opacity:0;transition:opacity .25s';
+    el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#151515;color:#FFFDF5;padding:10px 18px;border-radius:999px;font-weight:800;font-size:13px;z-index:200;border:3px solid #151515;box-shadow:5px 5px 0 rgba(0,0,0,.25);opacity:0;transition:opacity .25s';
     document.body.appendChild(el);
   }
   el.textContent = msg;
@@ -314,8 +298,9 @@ function doSearch(){
   const q = normalize(searchInput.value.trim());
   if(!q){ closeSearch(); return; }
   const results = [];
-  WC2026_TEAMS.forEach(t=>{
-    if(normalize(t.name).includes(q)){
+  const allGroups = WC2026_TEAMS.concat([SPECIALS_GROUP]);
+  allGroups.forEach(t=>{
+    if(t.id!=='specials' && normalize(t.name).includes(q)){
       results.push({ type:'team', team:t });
     }
     t.players.forEach(p=>{
@@ -340,8 +325,8 @@ function renderSearch(results, q){
       } else {
         html += `<div class="search-item" onclick="closeSearch();openTeam('${r.team.id}')">
           <span class="sflag" style="--c1:${r.team.c1};--c2:${r.team.c2}">${r.team.code}</span>
-          <div class="sinfo"><div class="sname">${r.player.name}</div><div class="steam">${r.team.name} · ${POS_LABEL[r.player.pos]||r.player.pos}</div></div>
-          <span class="sno">#${r.player.no}</span>
+          <div class="sinfo"><div class="sname">${r.player.name}</div><div class="steam">${r.team.name}</div></div>
+          <span class="sno">${typeof r.player.no==='number'?'#'+r.player.no:r.player.no}</span>
         </div>`;
       }
     });
