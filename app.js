@@ -267,7 +267,7 @@ function initHoverPreview(){
 function showHoverPreview(teamId, x, y){
   const t = TEAMS_BY_ID[teamId]; if(!t) return;
   const el = document.getElementById('hoverPreview');
-  const cells = t.players.map(p=>`<span class="hp-cell ${getSticker(t.id,p.no).owned?'on':''}"></span>`).join('');
+  const cells = t.players.map(p=>`<span class="hp-cell ${getSticker(t.id,p.no).owned?'on':''}">${typeof p.no==='number'?p.no:''}</span>`).join('');
   el.innerHTML = `<div class="hp-title">${t.name}</div><div class="hp-grid">${cells}</div>`;
   const left = Math.min(x+16, window.innerWidth-100);
   const top = Math.min(y+16, window.innerHeight-100);
@@ -319,13 +319,15 @@ function teamPageShell(t){
   `;
 }
 
+function jsNo(no){ return typeof no==='number' ? no : "'"+String(no).replace(/'/g,"\\'")+"'"; }
+
 function renderStickerGrid(t){
   const grid = document.getElementById('stickerGrid');
   grid.innerHTML = t.players.map(p=>{
     const s = getSticker(t.id,p.no);
     const kindClass = p.kind ? 'kind-'+p.kind : '';
     return `
-    <div class="sticker ${kindClass} ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" onclick="toggleOwned('${t.id}',${JSON.stringify(p.no)});refreshSticker('${t.id}')">
+    <div class="sticker ${kindClass} ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" onclick="toggleOwned('${t.id}',${jsNo(p.no)});refreshSticker('${t.id}')">
       ${p.kind==='logo'?'<span class="sticker-badge">✦ BRILHANTE</span>':''}
       <div class="sticker-top">
         <div class="sticker-no">${typeof p.no==='number'?'#'+p.no:p.no}</div>
@@ -336,9 +338,9 @@ function renderStickerGrid(t){
       <div class="sticker-dup" onclick="event.stopPropagation()">
         <span class="lbl">Repetida</span>
         <div class="stepper">
-          <button onclick="changeDup('${t.id}',${JSON.stringify(p.no)},-1);refreshSticker('${t.id}')">–</button>
+          <button onclick="event.stopPropagation();changeDup('${t.id}',${jsNo(p.no)},-1);refreshSticker('${t.id}')">–</button>
           <span class="n ${s.dup>0?'has':''}">${s.dup||0}</span>
-          <button onclick="changeDup('${t.id}',${JSON.stringify(p.no)},1);refreshSticker('${t.id}')">+</button>
+          <button onclick="event.stopPropagation();changeDup('${t.id}',${jsNo(p.no)},1);refreshSticker('${t.id}')">+</button>
         </div>
       </div>`:''}
     </div>`;
@@ -447,18 +449,21 @@ searchOverlay.addEventListener('click', e=>{ if(e.target===searchOverlay) closeS
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeSearch(); });
 
 function doSearch(){
-  const q = normalize(searchInput.value.trim());
-  if(!q){ closeSearch(); return; }
+  const raw = searchInput.value.trim();
+  const words = normalize(raw).split(/\s+/).filter(Boolean);
+  if(!words.length){ closeSearch(); return; }
   const results = [];
   ALL_GROUPS.forEach(t=>{
-    if(TEAMS_BY_ID[t.id] && normalize(t.name).includes(q)){
+    const teamHay = normalize(t.name+' '+(t.code||''));
+    if(TEAMS_BY_ID[t.id] && words.every(w=>teamHay.includes(w))){
       results.push({ type:'team', team:t });
     }
     t.players.forEach(p=>{
-      if(normalize(p.name).includes(q)) results.push({ type:'player', team:t, player:p });
+      const hay = normalize((t.code||'')+' '+p.no+' '+p.name);
+      if(words.every(w=>hay.includes(w))) results.push({ type:'player', team:t, player:p });
     });
   });
-  renderSearch(results.slice(0,40), searchInput.value.trim());
+  renderSearch(results.slice(0,60), raw);
 }
 function renderSearch(results, q){
   searchOverlay.classList.remove('hidden');
