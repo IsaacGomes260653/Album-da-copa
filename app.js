@@ -1,4 +1,20 @@
-const BALL_SVG = `<svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="21" fill="#fff" stroke="#151515" stroke-width="3"/><path fill="#151515" d="M24 12l7 5-2.6 8.2h-8.8L17 17z"/><path fill="#151515" d="M9 20l4-8 3 1-1 8zM9 20l3 10 6-3-2-8zM39 20l-4-8-3 1 1 8zM39 20l-3 10-6-3 2-8zM24 40l-6-3 1-7h10l1 7z"/></svg>`;
+/* ===================== ícones (SVG, sem emoji) ===================== */
+const ICONS = {
+  ball: `<svg viewBox="0 0 24 24" fill="#FFC93C" aria-hidden="true"><path d="M17 3a1 1 0 0 1 .993 .883l.007 .117v2.17a3 3 0 1 1 0 5.659v.171a6.002 6.002 0 0 1 -5 5.917v2.083h3a1 1 0 0 1 .117 1.993l-.117 .007h-8a1 1 0 0 1 -.117 -1.993l.117 -.007h3v-2.083a6.002 6.002 0 0 1 -4.996 -5.692l-.004 -.225v-.171a3 3 0 0 1 -3.996 -2.653l-.003 -.176l.005 -.176a3 3 0 0 1 3.995 -2.654l-.001 -2.17a1 1 0 0 1 1 -1h10zm-12 5a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2"/></svg>`,
+  star: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c.65 3.6 1.7 5.98 3.15 7.43C16.6 10.88 18.98 11.93 22 12c-3.02.07-5.4 1.12-6.85 2.57C13.7 16.02 12.65 18.4 12 22c-.65-3.6-1.7-5.98-3.15-7.43C7.4 13.12 5.02 12.07 2 12c3.02-.07 5.4-1.12 6.85-2.57C10.3 7.98 11.35 5.6 12 2z"/></svg>`,
+  bottle: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 1a2 2 0 0 1 1.995 1.85l.005 .15v.5c0 1.317 .381 2.604 1.094 3.705l.17 .25l.05 .072a9.093 9.093 0 0 1 1.68 4.92l.006 .354v6.199a3 3 0 0 1 -2.824 2.995l-.176 .005h-6a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-6.2a9.1 9.1 0 0 1 1.486 -4.982l.2 -.292l.05 -.069a6.823 6.823 0 0 0 1.264 -3.957v-.5a2 2 0 0 1 1.85 -1.995l.15 -.005h2zm.362 5h-2.724a8.827 8.827 0 0 1 -1.08 2.334l-.194 .284l-.05 .069a7.091 7.091 0 0 0 -1.307 3.798l-.003 .125a3.33 3.33 0 0 1 1.975 -.61a3.4 3.4 0 0 1 2.833 1.417c.27 .375 .706 .593 1.209 .583a1.4 1.4 0 0 0 1.166 -.583a3.4 3.4 0 0 1 .81 -.8l.003 .183c0 -1.37 -.396 -2.707 -1.137 -3.852l-.228 -.332a8.827 8.827 0 0 1 -1.273 -2.616z"/></svg>`,
+  camera: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.4A1.4 1.4 0 015.4 7h2.1l1-1.5h7l1 1.5h2.1A1.4 1.4 0 0120 8.4V18a1.4 1.4 0 01-1.4 1.4H5.4A1.4 1.4 0 014 18z"/><circle cx="12" cy="13" r="3.2"/></svg>`,
+  swap: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14.5M18.5 7L15 3.5M20 17H5.5M5.5 17L9 20.5"/></svg>`,
+  checklist: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h9M9.5 12h9M9.5 18h9"/><path d="M4.3 6.1l1 1L7.5 5"/><path d="M4.3 12.1l1 1L7.5 11"/><path d="M4.3 18.1l1 1L7.5 17"/></svg>`,
+  copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0014.5 4h-9A1.5 1.5 0 004 5.5v9A1.5 1.5 0 005.5 16H8"/></svg>`,
+  edit: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l.9-3.6L16.6 4.7a1.5 1.5 0 012.1 0l.6.6a1.5 1.5 0 010 2.1L7.6 19.1z"/><path d="M14.5 6.8l2.7 2.7"/></svg>`,
+  trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M9.5 7V5a1 1 0 011-1h3a1 1 0 011 1v2M7 7l.8 12a2 2 0 002 1.9h4.4a2 2 0 002-1.9L17 7"/><path d="M10.2 11v6M13.8 11v6"/></svg>`,
+  close: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>`,
+  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>`,
+  minus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>`,
+};
+const BALL_SVG = ICONS.ball;
 
 /* ===================== estado (multi-álbum) ===================== */
 const STORE_KEY = 'wc2026-album-v3';
@@ -145,8 +161,8 @@ function openAlbumMenu(){
     ${state.albums.map(a=>`
       <div class="album-item ${a.id===state.activeId?'active':''}">
         <span class="nm" onclick="switchAlbum('${a.id}')">${esc(a.name)}</span>
-        <button class="ic" title="Renomear" onclick="promptRenameAlbum('${a.id}')">✎</button>
-        <button class="ic" title="Excluir" onclick="confirmDeleteAlbum('${a.id}')">🗑</button>
+        <button class="ic" title="Renomear" onclick="promptRenameAlbum('${a.id}')">${ICONS.edit}</button>
+        <button class="ic" title="Excluir" onclick="confirmDeleteAlbum('${a.id}')">${ICONS.trash}</button>
       </div>`).join('')}
     <div class="album-menu-new" onclick="promptNewAlbum()">+ Novo álbum</div>
   </div>`;
@@ -205,7 +221,7 @@ function renderHome(){
 
   let html = `
   <div class="hero">
-    <h1><span class="ball" style="display:inline-block;width:38px;height:38px;vertical-align:-8px">${BALL_SVG}</span> Meu Álbum da Copa</h1>
+    <h1><span class="ball" style="display:inline-block;position:relative;width:38px;height:38px;vertical-align:-8px">${BALL_SVG}<span class="brand-ball-tag hero-tag">26</span></span> Meu Álbum da Copa</h1>
     <p>Marque as figurinhas que você já colou, controle as repetidas e as faltantes, e organize suas trocas — Copa do Mundo FIFA 2026, ${WC2026_TEAMS.length*20+WC2026_SPECIALS.length+WC2026_COCA.length} figurinhas na ordem oficial do álbum.</p>
   </div>
   <div class="stats-row">
@@ -216,7 +232,7 @@ function renderHome(){
   </div>
   <div class="specials-row">
     <div class="specials-banner" onclick="openTeam('specials')">
-      <div class="icon">✦</div>
+      <div class="icon">${ICONS.star}</div>
       <div>
         <div class="t">Figurinhas Especiais</div>
         <div class="s">Escudo Panini, emblema, mascote, bola e a história das Copas</div>
@@ -224,7 +240,7 @@ function renderHome(){
       <div class="prog">${spOwned}/${SPECIALS_GROUP.players.length}</div>
     </div>
     <div class="specials-banner coca" onclick="openTeam('coca')">
-      <div class="icon">🥤</div>
+      <div class="icon">${ICONS.bottle}</div>
       <div>
         <div class="t">Especiais Coca-Cola</div>
         <div class="s">Prancha exclusiva com 12 craques, encontradas em garrafas Coca-Cola</div>
@@ -242,6 +258,7 @@ function renderHome(){
       const complete = oc===t.players.length;
       html += `
       <div class="team-card ${complete?'complete':''}" data-team-id="${t.id}" style="--c1:${t.c1};--c2:${t.c2}" onclick="openTeam('${t.id}')">
+        ${complete?`<span class="team-card-badge">${ICONS.check}</span>`:''}
         <div class="team-flag">${flagImg(t.id)}</div>
         <div class="team-name">${t.name}</div>
         <div class="team-progress"><div class="team-progress-fill" style="width:${pct}%"></div></div>
@@ -328,19 +345,20 @@ function renderStickerGrid(t){
     const kindClass = p.kind ? 'kind-'+p.kind : '';
     return `
     <div class="sticker ${kindClass} ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" onclick="toggleOwned('${t.id}',${jsNo(p.no)});refreshSticker('${t.id}')">
-      ${p.kind==='logo'?'<span class="sticker-badge">✦ BRILHANTE</span>':''}
+      ${p.kind==='logo'?`<span class="sticker-badge">${ICONS.star} BRILHANTE</span>`:''}
+      ${p.kind==='photo'?`<span class="sticker-photo-ic">${ICONS.camera}</span>`:''}
       <div class="sticker-top">
         <div class="sticker-no">${typeof p.no==='number'?'#'+p.no:p.no}</div>
-        <div class="sticker-check"></div>
+        <div class="sticker-check">${s.owned?ICONS.check:''}</div>
       </div>
       <div class="sticker-name">${p.name}</div>
       ${s.owned?`
       <div class="sticker-dup" onclick="event.stopPropagation()">
         <span class="lbl">Repetida</span>
         <div class="stepper">
-          <button onclick="event.stopPropagation();changeDup('${t.id}',${jsNo(p.no)},-1);refreshSticker('${t.id}')">–</button>
+          <button onclick="event.stopPropagation();changeDup('${t.id}',${jsNo(p.no)},-1);refreshSticker('${t.id}')">${ICONS.minus}</button>
           <span class="n ${s.dup>0?'has':''}">${s.dup||0}</span>
-          <button onclick="event.stopPropagation();changeDup('${t.id}',${jsNo(p.no)},1);refreshSticker('${t.id}')">+</button>
+          <button onclick="event.stopPropagation();changeDup('${t.id}',${jsNo(p.no)},1);refreshSticker('${t.id}')">${ICONS.plus}</button>
         </div>
       </div>`:''}
     </div>`;
@@ -363,61 +381,83 @@ function refreshSticker(teamId){
 function renderTrade(tab){
   tab = tab || 'dup';
   const main = document.getElementById('main');
-  let rows = [];
+  // percorre ALL_GROUPS na ordem real do álbum (seleções por grupo A-L, depois
+  // especiais, depois Coca-Cola) e, dentro de cada seção, os jogadores na
+  // ordem em que aparecem nos dados — nunca por ordenação alfabética/textual,
+  // que embaralha "10" antes de "2".
+  const sections = [];
+  let totalRows = 0, totalDup = 0;
   ALL_GROUPS.forEach(t=>{
+    const rows = [];
     t.players.forEach(p=>{
       const s = getSticker(t.id,p.no);
       if(tab==='dup' && s.owned && s.dup>0) rows.push({ team:t, player:p, qty:s.dup });
       if(tab==='missing' && !s.owned) rows.push({ team:t, player:p });
     });
+    if(rows.length){
+      sections.push({ team:t, rows });
+      totalRows += rows.length;
+      if(tab==='dup') totalDup += rows.reduce((a,r)=>a+r.qty,0);
+    }
   });
-  rows.sort((a,b)=> a.team.name.localeCompare(b.team.name) || (''+a.player.no).localeCompare(''+b.player.no));
 
   const tabsHtml = `<div class="trade-tabs">
-    <button class="trade-tab ${tab==='dup'?'active':''}" onclick="location.hash='#/trade'">🔁 Repetidas</button>
-    <button class="trade-tab ${tab==='missing'?'active':''}" onclick="location.hash='#/trade/faltam'">📋 Faltantes</button>
+    <button class="trade-tab ${tab==='dup'?'active':''}" onclick="location.hash='#/trade'">${ICONS.swap} Repetidas</button>
+    <button class="trade-tab ${tab==='missing'?'active':''}" onclick="location.hash='#/trade/faltam'">${ICONS.checklist} Faltantes</button>
   </div>`;
 
-  if(!rows.length){
+  if(!sections.length){
     main.innerHTML = tabsHtml + `
     <div class="trade-empty">
       <div class="big">${tab==='dup'?'Nenhuma repetida ainda':'Nenhuma faltante — álbum completo! 🎉'}</div>
       ${tab==='dup'?'Quando você marcar figurinhas repetidas, elas aparecem aqui — prontas pra organizar suas trocas.':''}
     </div>`;
+    window._tradeSections = []; window._tradeTab = tab;
     return;
   }
 
-  const totalDup = tab==='dup' ? rows.reduce((a,r)=>a+r.qty,0) : 0;
   const countLabel = tab==='dup'
-    ? `${rows.length} figurinha${rows.length===1?'':'s'} diferente${rows.length===1?'':'s'} · ${totalDup} repetida${totalDup===1?'':'s'} no total`
-    : `${rows.length} figurinha${rows.length===1?'':'s'} faltando`;
+    ? `${totalRows} figurinha${totalRows===1?'':'s'} diferente${totalRows===1?'':'s'} · ${totalDup} repetida${totalDup===1?'':'s'} no total`
+    : `${totalRows} figurinha${totalRows===1?'':'s'} faltando`;
 
   main.innerHTML = tabsHtml + `
   <div class="trade-toolbar">
     <div class="count">${countLabel}</div>
-    <button class="btn ghost" onclick="copyList('${tab}')">📋 Copiar lista</button>
+    <button class="btn ghost" onclick="copyList('${tab}')">${ICONS.copy} Copiar lista</button>
   </div>
-  <div class="trade-list">
-    ${rows.map(r=>`
-      <div class="trade-row">
-        <span class="tflag">${TEAMS_BY_ID[r.team.id]?flagImg(r.team.id):''}</span>
-        <span class="tcode">${stickerCode(r.team,r.player.no)}</span>
-        <div class="tinfo">
-          <div class="tteam">${r.team.name}</div>
-          <div class="tname">${r.player.name}</div>
+  <div class="trade-sections">
+    ${sections.map(sec=>`
+      <div class="trade-section">
+        <div class="trade-section-head">
+          ${TEAMS_BY_ID[sec.team.id]
+            ? `<span class="tflag">${flagImg(sec.team.id)}</span>`
+            : `<span class="tflag tflag-code">${sec.team.code}</span>`}
+          <span class="tsname">${sec.team.name}</span>
+          <span class="tscount">${sec.rows.length}</span>
         </div>
-        ${tab==='dup'?`<span class="tqty">${r.qty}x</span>`:''}
+        <div class="trade-list">
+          ${sec.rows.map(r=>`
+            <div class="trade-row">
+              <span class="tcode">${stickerCode(r.team,r.player.no)}</span>
+              <div class="tinfo"><div class="tname">${r.player.name}</div></div>
+              ${tab==='dup'?`<span class="tqty">${r.qty}x</span>`:''}
+            </div>`).join('')}
+        </div>
       </div>`).join('')}
   </div>`;
-  window._tradeRows = rows;
+  window._tradeSections = sections;
   window._tradeTab = tab;
 }
 
 function copyList(tab){
-  const rows = window._tradeRows||[];
+  const sections = window._tradeSections||[];
   const title = tab==='dup' ? '🔁 Minhas repetidas' : '📋 O que me falta';
-  const lines = [title+' — Álbum Copa 2026 ('+currentAlbum().name+')', ''];
-  rows.forEach(r=> lines.push(`${stickerCode(r.team,r.player.no)} ${r.player.name}${tab==='dup'?' — '+r.qty+'x':''}`));
+  const lines = [title+' — Álbum Copa 2026 ('+currentAlbum().name+')'];
+  sections.forEach(sec=>{
+    lines.push('', sec.team.name.toUpperCase()+' ('+sec.rows.length+')');
+    const items = sec.rows.map(r=> tab==='dup' && r.qty>1 ? `${r.player.no}×${r.qty}` : `${r.player.no}`);
+    lines.push(items.join(', '));
+  });
   const text = lines.join('\n');
   if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(()=> toast('Lista copiada!')).catch(()=>fallbackCopy(text));
@@ -468,7 +508,7 @@ function doSearch(){
 function renderSearch(results, q){
   searchOverlay.classList.remove('hidden');
   let html = `<div class="search-panel">
-    <div class="search-panel-head"><b>Resultados para "${esc(q)}"</b><button class="search-close" onclick="closeSearch()">✕</button></div>`;
+    <div class="search-panel-head"><b>Resultados para "${esc(q)}"</b><button class="search-close" onclick="closeSearch()">${ICONS.close}</button></div>`;
   if(!results.length){
     html += `<div class="search-empty">Nada encontrado. Tente outro nome.</div>`;
   } else {
