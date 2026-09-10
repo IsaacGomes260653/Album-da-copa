@@ -21,6 +21,8 @@ O app segue a **estrutura real do álbum**: **992 figurinhas** — 20 por seleç
 - **Busca:** encontre qualquer jogador ou seleção digitando o nome, direto do topo da tela.
 - **Progresso:** barra geral animada (X/992), progresso por seleção e contagem de álbuns completos.
 - **Sem internet, sem conta:** os dados ficam salvos no seu navegador (`localStorage`) — abre e usa, sem cadastro.
+- **Instalável:** tem ícone e manifesto próprios — dá pra "Adicionar à tela inicial" no celular e abrir como um app.
+- **Acessível por teclado:** todo card e figurinha responde a Tab + Enter/Espaço, com foco visível e leitura por leitor de tela.
 
 ## 🚀 Tecnologias
 
@@ -53,6 +55,8 @@ The app mirrors the **real album structure**: **992 stickers** — 20 per team (
 - **Search:** find any player or team by name from the top bar.
 - **Progress tracking:** animated overall progress bar (X/992), per-team completion, and completed-album count.
 - **No account, no internet needed:** data is saved locally in your browser (`localStorage`) — just open and use.
+- **Installable:** ships its own icon and web manifest — add it to your phone's home screen and open it like an app.
+- **Keyboard accessible:** every card and sticker responds to Tab + Enter/Space, with visible focus and screen-reader labels.
 
 ## 🚀 Tech stack
 
