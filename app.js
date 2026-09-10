@@ -160,11 +160,11 @@ function openAlbumMenu(){
   el.innerHTML = `<div class="album-menu-panel">
     ${state.albums.map(a=>`
       <div class="album-item ${a.id===state.activeId?'active':''}">
-        <span class="nm" onclick="switchAlbum('${a.id}')">${esc(a.name)}</span>
+        <span class="nm" tabindex="0" role="button" onclick="switchAlbum('${a.id}')">${esc(a.name)}</span>
         <button class="ic" title="Renomear" onclick="promptRenameAlbum('${a.id}')">${ICONS.edit}</button>
         <button class="ic" title="Excluir" onclick="confirmDeleteAlbum('${a.id}')">${ICONS.trash}</button>
       </div>`).join('')}
-    <div class="album-menu-new" onclick="promptNewAlbum()">+ Novo álbum</div>
+    <div class="album-menu-new" tabindex="0" role="button" onclick="promptNewAlbum()">+ Novo álbum</div>
   </div>`;
   el.classList.remove('hidden');
   setTimeout(()=>document.addEventListener('click', onDocClickCloseAlbumMenu),0);
@@ -231,7 +231,7 @@ function renderHome(){
     <div class="stat-box"><div class="v">${teamsComplete}/48</div><div class="k">Álbuns completos</div></div>
   </div>
   <div class="specials-row">
-    <div class="specials-banner" onclick="openTeam('specials')">
+    <div class="specials-banner" tabindex="0" role="button" onclick="openTeam('specials')">
       <div class="icon">${ICONS.star}</div>
       <div>
         <div class="t">Figurinhas Especiais</div>
@@ -239,7 +239,7 @@ function renderHome(){
       </div>
       <div class="prog">${spOwned}/${SPECIALS_GROUP.players.length}</div>
     </div>
-    <div class="specials-banner coca" onclick="openTeam('coca')">
+    <div class="specials-banner coca" tabindex="0" role="button" onclick="openTeam('coca')">
       <div class="icon">${ICONS.bottle}</div>
       <div>
         <div class="t">Especiais Coca-Cola</div>
@@ -257,7 +257,7 @@ function renderHome(){
       const pct = Math.round(oc/t.players.length*100);
       const complete = oc===t.players.length;
       html += `
-      <div class="team-card ${complete?'complete':''}" data-team-id="${t.id}" style="--c1:${t.c1};--c2:${t.c2}" onclick="openTeam('${t.id}')">
+      <div class="team-card ${complete?'complete':''}" data-team-id="${t.id}" style="--c1:${t.c1};--c2:${t.c2}" tabindex="0" role="button" aria-label="${esc(t.name)}, ${oc}/${t.players.length} figurinhas" onclick="openTeam('${t.id}')">
         ${complete?`<span class="team-card-badge">${ICONS.check}</span>`:''}
         <div class="team-flag">${flagImg(t.id)}</div>
         <div class="team-name">${t.name}</div>
@@ -344,7 +344,7 @@ function renderStickerGrid(t){
     const s = getSticker(t.id,p.no);
     const kindClass = p.kind ? 'kind-'+p.kind : '';
     return `
-    <div class="sticker ${kindClass} ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" onclick="toggleOwned('${t.id}',${jsNo(p.no)});refreshSticker('${t.id}')">
+    <div class="sticker ${kindClass} ${s.owned?'owned':''}" style="--team-c1:${t.c1};--team-c2:${t.c2}" tabindex="0" role="button" aria-pressed="${s.owned}" aria-label="${esc(p.name)}${s.owned?', colada':', faltando'}" onclick="toggleOwned('${t.id}',${jsNo(p.no)});refreshSticker('${t.id}')">
       ${p.kind==='logo'?`<span class="sticker-badge">${ICONS.star} BRILHANTE</span>`:''}
       ${p.kind==='photo'?`<span class="sticker-photo-ic">${ICONS.camera}</span>`:''}
       <div class="sticker-top">
@@ -487,6 +487,13 @@ searchInput.addEventListener('input', doSearch);
 searchInput.addEventListener('focus', ()=>{ if(searchInput.value.trim()) doSearch(); });
 searchOverlay.addEventListener('click', e=>{ if(e.target===searchOverlay) closeSearch(); });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeSearch(); });
+// role="button" divs/spans (cards, stickers, menu itens) não recebem clique do teclado nativamente
+document.addEventListener('keydown', e=>{
+  if((e.key==='Enter'||e.key===' ') && e.target.getAttribute('role')==='button'){
+    e.preventDefault();
+    e.target.click();
+  }
+});
 
 function doSearch(){
   const raw = searchInput.value.trim();
@@ -515,12 +522,12 @@ function renderSearch(results, q){
     results.forEach(r=>{
       const flagHtml = TEAMS_BY_ID[r.team.id] ? flagImg(r.team.id) : '';
       if(r.type==='team'){
-        html += `<div class="search-item" onclick="closeSearch();openTeam('${r.team.id}')">
+        html += `<div class="search-item" tabindex="0" role="button" onclick="closeSearch();openTeam('${r.team.id}')">
           <span class="sflag">${flagHtml}</span>
           <div class="sinfo"><div class="sname">${r.team.name}</div><div class="steam">Grupo ${r.team.group} · seleção</div></div>
         </div>`;
       } else {
-        html += `<div class="search-item" onclick="closeSearch();openTeam('${r.team.id}')">
+        html += `<div class="search-item" tabindex="0" role="button" onclick="closeSearch();openTeam('${r.team.id}')">
           <span class="sflag">${flagHtml}</span>
           <div class="sinfo"><div class="sname">${r.player.name}</div><div class="steam">${r.team.name}</div></div>
           <span class="sno">${stickerCode(r.team,r.player.no)}</span>

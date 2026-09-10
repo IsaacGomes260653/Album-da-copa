@@ -33,6 +33,8 @@ input{font-family:inherit}
 ::selection{background:var(--yellow);color:#151515}
 .hidden{display:none!important}
 a{color:inherit}
+[role="button"]{outline:none}
+[role="button"]:focus-visible{box-shadow:0 0 0 3px var(--yellow);border-radius:var(--r,10px)}
 
 /* fundo com mistura de cores das nações, bem sutil */
 .bg-blobs{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
