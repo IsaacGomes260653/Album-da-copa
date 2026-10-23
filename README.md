@@ -3,6 +3,10 @@
 ![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 ![Linguagens](https://img.shields.io/badge/Tecnologias-HTML%20%7C%20CSS%20%7C%20JS-blue)
 
+**[Abrir o álbum](https://isaacgomes260653.github.io/Album-da-copa/)** · funciona no celular e pode ser instalado na tela inicial.
+
+![Tela inicial do Meu Álbum: busca, progresso geral de 992 figurinhas, contadores de coladas, faltantes e repetidas, figurinhas especiais e os grupos com as bandeiras das seleções](.github/screenshot.png)
+
 ## 📖 Sobre o Projeto
 
 Organizador digital de figurinhas do álbum da Copa do Mundo 2026, criado para resolver um problema clássico de colecionador: nem sempre dá pra carregar o álbum físico pra conferir o que falta antes de fechar uma troca. Aqui é só abrir o app no celular.
@@ -34,6 +38,10 @@ Projeto 100% estático, sem build e sem dependências externas:
 ## 🏃 Como usar
 
 Basta abrir o `index.html` no navegador — funciona local ou publicado (ex. GitHub Pages), sem servidor nem instalação.
+
+## 📄 Licença
+
+O código está sob a licença [MIT](LICENSE). As bandeiras vêm do [flag-icons](https://github.com/lipis/flag-icons) (MIT). Copa do Mundo, FIFA, Panini e Coca-Cola são marcas de seus donos; este é um projeto pessoal, sem vínculo com elas.
 
 ---
 
@@ -67,4 +75,8 @@ Fully static, no build step, no external dependencies:
 
 ## 🏃 Running it
 
-Just open `index.html` in a browser — works locally or published (e.g. GitHub Pages), no server or install required.
+Just open `index.html` in a browser — works locally or published (e.g. GitHub Pages), no server or install required. Live version: **[open the album](https://isaacgomes260653.github.io/Album-da-copa/)**.
+
+## 📄 License
+
+Code under the [MIT](LICENSE) license. Flags from [flag-icons](https://github.com/lipis/flag-icons) (MIT). World Cup, FIFA, Panini, and Coca-Cola are trademarks of their owners; this is a personal project with no affiliation.
