@@ -97,13 +97,16 @@ Abra <http://localhost:8000>. Não há dependências nem build: num clone limpo,
 
 ```mermaid
 flowchart LR
-    U["URL com hash<br/>#/ · #/team/brazil · #/trade"] -->|"hashchange"| R["route()<br/>app.js"]
-    R --> H["renderHome()<br/>grupos e totais"]
-    R --> T["renderTeam()<br/>as 20 figurinhas"]
-    R --> X["renderTrade()<br/>repetidas e faltantes"]
-    D["data.js e flags.js<br/>992 figurinhas e 48 bandeiras"] --> H & T & X
+    U["URL com hash<br/>#/ · #/team/brazil · #/trade"] -->|"hashchange"| R["route()"]
+    D["data.js e flags.js<br/>992 figurinhas e 48 bandeiras"] --> telas
+    R --> telas
+    subgraph telas["telas do app.js"]
+        H["renderHome()<br/>grupos e totais"]
+        T["renderTeam()<br/>as 20 figurinhas"]
+        X["renderTrade()<br/>repetidas e faltantes"]
+    end
     T -->|"colar e repetidas"| S["state<br/>todos os álbuns"]
-    S <-->|"JSON"| L[("localStorage<br/>wc2026-album-v3")]
+    S <-->|"JSON"| L[("localStorage")]
     X -->|"Copiar lista"| C["área de transferência"]
 ```
 
