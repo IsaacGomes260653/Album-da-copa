@@ -83,3 +83,57 @@ Abra <http://localhost:8000>. Não há dependências nem build: num clone limpo,
 - **Instalável.** Tem manifesto e ícones próprios para adicionar à tela inicial do celular e abrir como app, sem a barra do navegador. Não tem service worker, então o site publicado precisa de internet para abrir.
 
 > O app usa as bandeiras reais das seleções, do [flag-icons](https://github.com/lipis/flag-icons), e os códigos da FIFA (BRA, ARG, GER), mas não reproduz brasões de federações nem fotos de jogadores, que têm direitos de imagem. O visual é próprio, não uma cópia do álbum da Panini.
+
+## Como foi feito
+
+| Escolha | Por quê |
+|---|---|
+| HTML, CSS e JavaScript, sem framework e sem build | São três telas e um estado pequeno. O GitHub Pages publica a `main` como ela está, e o app roda em qualquer servidor estático ou até sem servidor. |
+| Rotas no hash da URL (`#/`, `#/team/brazil`, `#/trade`, `#/trade/faltam`) | O GitHub Pages só entrega arquivos. Com o hash, cada tela tem endereço próprio e o botão voltar funciona, sem nenhuma regra no servidor. |
+| `localStorage` | Sem conta e sem backend: todos os álbuns ficam num JSON só, na chave `wc2026-album-v3`. |
+| Dados em `data.js` e bandeiras em `flags.js` | Carregados por `<script>` como constantes, funcionam até no `file://`. As 48 bandeiras do flag-icons vão embutidas em SVG, sem pedir nada a outro servidor. |
+| Variáveis CSS por seleção (`--c1` e `--c2`) | Cada seleção tem duas cores no `data.js`, e o cartão, o cabeçalho e as figurinhas coladas usam essas cores sem uma regra de CSS para cada time. |
+| Manifesto web | Nome, cores e ícones, incluindo o ícone adaptável do Android, para instalar o app na tela inicial. |
+
+```mermaid
+flowchart LR
+    U["URL com hash<br/>#/ · #/team/brazil · #/trade"] -->|"hashchange"| R["route()<br/>app.js"]
+    R --> H["renderHome()<br/>grupos e totais"]
+    R --> T["renderTeam()<br/>as 20 figurinhas"]
+    R --> X["renderTrade()<br/>repetidas e faltantes"]
+    D["data.js e flags.js<br/>992 figurinhas e 48 bandeiras"] --> H & T & X
+    T -->|"colar e repetidas"| S["state<br/>todos os álbuns"]
+    S <-->|"JSON"| L[("localStorage<br/>wc2026-album-v3")]
+    X -->|"Copiar lista"| C["área de transferência"]
+```
+
+Cada toque muda o `state`, grava o JSON inteiro no `localStorage` e redesenha só o que mudou: na página da seleção, a grade, o cabeçalho e a barra do topo.
+
+### Decisões técnicas e o que eu aprendi
+
+- **Só o que foi marcado vai para o estado.** Uma figurinha sem marca e sem repetida sai do objeto, então um álbum novo é `{}` e o JSON cresce com o que foi colado, não com as 992.
+- **Repetida depende de colada.** O contador só aparece em figurinha colada, e descolar zera as repetidas. Um bug antigo fazia o clique no contador descolar a figurinha. Agora o clique no contador para nele, com o `stopPropagation()`.
+- **A ordem do álbum, não a do alfabeto.** As listas de troca percorrem as seleções e as figurinhas na ordem dos dados. Ordenar por texto punha a 10 antes da 2.
+- **Aspas no `onclick`.** Os números das especiais são texto ("00", "FWC1", "CC1") e quebravam o `onclick` montado no HTML. A função `jsNo()` passa esses números entre aspas escapadas.
+- **Mudar o formato sem perder o progresso.** O estado passou de um álbum só (chaves `wc2026-album-v1` e `-v2`) para vários álbuns (`-v3`). Na primeira abertura da versão nova, as figurinhas da antiga viram o "Meu Álbum".
+- **Teclado com um listener só.** Cartões e figurinhas são `div` com `role="button"` e `tabindex="0"`, e um único listener no `document` transforma Enter e Espaço em clique.
+
+<details>
+<summary>Estrutura de pastas</summary>
+
+```
+.
+├── index.html          # a página: topo com busca, seletor de álbuns e barra de progresso
+├── style.css           # o visual: tema escuro, cores por seleção e layout do celular
+├── app.js              # estado, rotas, telas, busca, prévia e listas de troca
+├── data.js             # as 48 seleções, as 20 especiais e as 12 da Coca-Cola
+├── flags.js            # as 48 bandeiras do flag-icons, em SVG embutido
+├── manifest.json       # nome, cores e ícones para instalar na tela inicial
+├── favicon.png, apple-touch-icon.png e icon-*.png
+├── LICENSE
+└── .github/
+    ├── banner.svg, banner-mobile.svg e social-preview.png
+    └── capturas/       # GIF e capturas deste README
+```
+
+</details>
