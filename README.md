@@ -1,82 +1,186 @@
-# 🏆 Meu Álbum — Copa do Mundo 2026
+<p align="center">
+  <picture>
+    <source media="(max-width: 767px)" srcset="https://raw.githubusercontent.com/IsaacGomes260653/Album-da-copa/main/.github/banner-mobile.svg">
+    <img src="https://raw.githubusercontent.com/IsaacGomes260653/Album-da-copa/main/.github/banner.svg" alt="Meu Álbum da Copa, projeto pessoal no ar no GitHub Pages: as 992 figurinhas da Copa 2026 na ordem do álbum, com repetidas, faltantes e listas para a troca">
+  </picture>
+</p>
 
-![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
-![Linguagens](https://img.shields.io/badge/Tecnologias-HTML%20%7C%20CSS%20%7C%20JS-blue)
+<p align="center">
+  <b>Álbum digital da Copa 2026: marque o que já colou, conte as repetidas e copie a lista do que falta antes da troca.</b><br>
+  Para quem coleciona o álbum e não quer levar o livro para cada troca, e para quem estuda JavaScript sem framework.<br>
+  <a href="https://isaacgomes260653.github.io/Album-da-copa/"><b>Abrir o álbum</b></a> · sem cadastro: o progresso fica salvo no próprio navegador
+</p>
 
-**[Abrir o álbum](https://isaacgomes260653.github.io/Album-da-copa/)** · funciona no celular e pode ser instalado na tela inicial.
+<p align="center">
+  <a href="https://github.com/IsaacGomes260653/Album-da-copa/actions/workflows/pages/pages-build-deployment"><img alt="Status da publicação no GitHub Pages" src="https://img.shields.io/github/actions/workflow/status/IsaacGomes260653/Album-da-copa/pages%2Fpages-build-deployment?branch=main&style=flat-square&label=GitHub%20Pages&color=122039&labelColor=0b1324"></a>
+  <a href="LICENSE"><img alt="Licença MIT" src="https://img.shields.io/github/license/IsaacGomes260653/Album-da-copa?style=flat-square&label=licen%C3%A7a&color=122039&labelColor=0b1324"></a>
+  <a href="https://github.com/IsaacGomes260653/Album-da-copa/commits/main"><img alt="Data do último commit" src="https://img.shields.io/github/last-commit/IsaacGomes260653/Album-da-copa?style=flat-square&label=%C3%BAltimo%20commit&color=122039&labelColor=0b1324"></a>
+  <img alt="Linguagem principal: JavaScript" src="https://img.shields.io/github/languages/top/IsaacGomes260653/Album-da-copa?style=flat-square&logo=javascript&logoColor=white&color=122039&labelColor=0b1324">
+</p>
 
-![Tela inicial do Meu Álbum: busca, progresso geral de 992 figurinhas, contadores de coladas, faltantes e repetidas, figurinhas especiais e os grupos com as bandeiras das seleções](.github/screenshot.png)
+<p align="center">
+  <a href="#demonstração">Demonstração</a> ·
+  <a href="#como-rodar-em-60-segundos">Como rodar</a> ·
+  <a href="#o-que-ele-faz">O que ele faz</a> ·
+  <a href="#como-foi-feito">Como foi feito</a> ·
+  <a href="#testes-e-qualidade">Testes e qualidade</a> ·
+  <a href="#próximos-passos">Próximos passos</a> ·
+  <a href="#english-summary">English</a>
+</p>
 
-## 📖 Sobre o Projeto
+## Demonstração
 
-Organizador digital de figurinhas do álbum da Copa do Mundo 2026, criado para resolver um problema clássico de colecionador: nem sempre dá pra carregar o álbum físico pra conferir o que falta antes de fechar uma troca. Aqui é só abrir o app no celular.
+<p align="center">
+  <img src=".github/capturas/demo.gif" width="720" alt="Demonstração do Meu Álbum da Copa: a busca por vini leva à página do Brasil, onde as figurinhas 1, 2, 4, 10, 14 e 18 são marcadas como coladas, a 14, de Vinicius Júnior, ganha duas repetidas e a 2, de Alisson, uma; de volta ao álbum, o cartão do Brasil mostra 6/20 e, com o mouse em cima, a prévia das 20 figurinhas; na tela Trocas aparecem as duas repetidas, a lista é copiada e a aba Faltantes mostra as 986 que faltam">
+</p>
 
-O app segue a **estrutura real do álbum**: **992 figurinhas** — 20 por seleção (48 times), 20 especiais (emblema, mascote, bola oficial, sedes e história das Copas) e a prancha exclusiva de **12 especiais Coca-Cola** — na mesma ordem e numeração do álbum físico: a nº1 de cada seleção é o escudo (brilhante), da 2 à 12 e da 14 à 20 são os jogadores **em ordem de posição** (goleiro → zagueiro → meio-campo → atacante), e a nº13 é a foto oficial da seleção.
+Gravado com o Playwright, com o app rodando localmente (`python -m http.server`). Na gravação, o fundo animado ficou parado para o GIF caber em menos de 5 MB; o resto está como no app. O app tem só o tema escuro.
 
-> **Nota sobre imagens:** o app usa as **bandeiras reais** das seleções (via [flag-icons](https://github.com/lipis/flag-icons), projeto open-source sob licença MIT) e o código oficial da FIFA (ex.: BRA, ARG, GER), mas não reproduz o brasão das federações nem fotos reais de jogadores — esses materiais são protegidos por direitos autorais/de imagem. O visual (fundo escuro com mistura de cores das nações, cards por seleção) é uma criação própria, não uma cópia do álbum oficial da Panini.
+No celular, a busca ganha uma linha própria e as figurinhas ficam em duas colunas:
 
-## ✨ Funcionalidades
+<p align="center">
+  <img src=".github/capturas/celular-selecao.png" width="300" alt="Página do Brasil numa tela de 390 px: cabeçalho verde e amarelo com 6/20 coladas, 30% e 3 repetidas, e as figurinhas em duas colunas, com o contador de repetidas nas coladas">
+  <img src=".github/capturas/celular-trocas.png" width="300" alt="Tela Trocas numa tela de 390 px: aba Repetidas com 3 figurinhas diferentes e 4 repetidas no total, o botão Copiar lista e as repetidas do Brasil e da Argentina com o código, o nome e a quantidade">
+</p>
 
-- **Múltiplos álbuns:** crie um álbum por pessoa (ex. um por filho), com nome próprio, e troque entre eles pelo seletor no topo — cada um guarda seu progresso separado.
-- **Controle de acervo:** toque numa figurinha pra marcar como colada; toque de novo pra desmarcar.
-- **Gestão de repetidas:** cada figurinha colada ganha um contador (`− N +`) pra registrar quantas cópias extras você tem.
-- **Listas para compartilhar:** duas telas — **Repetidas** e **Faltantes** — que juntam automaticamente as figurinhas de todas as seleções e especiais, com botão "copiar lista" (formato `BRA 03 Nome`, pronto pra mandar no WhatsApp).
-- **Prévia rápida:** passe o mouse sobre o card de uma seleção na tela inicial pra ver uma miniatura de quais figurinhas já tem, sem precisar abrir a página dela.
-- **Busca:** encontre qualquer jogador ou seleção digitando o nome, direto do topo da tela.
-- **Progresso:** barra geral animada (X/992), progresso por seleção e contagem de álbuns completos.
-- **Sem internet, sem conta:** os dados ficam salvos no seu navegador (`localStorage`) — abre e usa, sem cadastro.
-- **Instalável:** tem ícone e manifesto próprios — dá pra "Adicionar à tela inicial" no celular e abrir como um app.
-- **Acessível por teclado:** todo card e figurinha responde a Tab + Enter/Espaço, com foco visível e leitura por leitor de tela.
+## Como rodar em 60 segundos
 
-## 🚀 Tecnologias
+Precisa do Git e de um servidor de arquivos estáticos. Aqui, o do Python 3.
 
-Projeto 100% estático, sem build e sem dependências externas:
-- **HTML5 + CSS3** — visual próprio (fundo escuro, cores vivas por seleção, cards com movimento no hover), com a cor de cada seleção aplicada dinamicamente na sua página.
-- **JavaScript (vanilla)** — roteamento por hash (`#/`, `#/team/:id`, `#/trade`), estado multi-álbum em `localStorage`.
-- **Dados**: numeração e ordem de cada figurinha (nome, número, tipo) conferidas com o checklist público do álbum oficial 2026, incluindo a prancha Coca-Cola.
+```bash
+git clone https://github.com/IsaacGomes260653/Album-da-copa.git
+cd Album-da-copa
+python -m http.server 8000
+```
 
-## 🏃 Como usar
+Abra <http://localhost:8000>. Não há dependências nem build: num clone limpo, do `git clone` até o app no ar, levou cerca de 3 segundos (Windows 11 e Python 3.12).
 
-Basta abrir o `index.html` no navegador — funciona local ou publicado (ex. GitHub Pages), sem servidor nem instalação.
+- No macOS e no Linux, o comando pode ser `python3`.
+- Também abre sem servidor, com dois cliques no `index.html`: os dados vêm de arquivos `.js` carregados por `<script>`, e não por `fetch`, então nada é bloqueado no `file://`.
+- Sem internet, o app aberto localmente funciona igual. Só as fontes, que vêm do Google Fonts, dão lugar à fonte do sistema.
+- Cada endereço guarda o seu próprio progresso: o que você marca em `localhost:8000` não aparece no `file://` nem no site publicado.
 
-## 📄 Licença
+## O que ele faz
 
-O código está sob a licença [MIT](LICENSE). As bandeiras vêm do [flag-icons](https://github.com/lipis/flag-icons) (MIT). Copa do Mundo, FIFA, Panini e Coca-Cola são marcas de seus donos; este é um projeto pessoal, sem vínculo com elas.
+- **As 992 figurinhas na numeração do álbum.** São 48 seleções em 12 grupos (A a L), com 20 figurinhas cada: a 1 é o escudo (brilhante), a 13 é a foto oficial da seleção e as outras 18 são jogadores. Depois vêm as 20 especiais, da 00 (selo Panini) à FWC19 (emblema, mascote, bola, sedes e a história das Copas), e as 12 da Coca-Cola, de CC1 a CC12.
+- **Marcar com um toque.** Um toque cola a figurinha, outro descola. A colada ganha um contador de repetidas (`− N +`), e descolar zera as repetidas dela.
+- **Progresso em três lugares.** A barra do topo (X / 992), o cartão de cada seleção (X/20) e os totais da tela inicial: coladas, faltam, repetidas e seleções completas.
+- **Trocas.** Duas listas, Repetidas e Faltantes, juntam todas as seleções e especiais na ordem do álbum, com o código de cada figurinha (BRA 14). O botão **Copiar lista** copia um texto curto, por seleção, pronto para colar numa conversa:
+
+  ```
+  🔁 Minhas repetidas — Álbum Copa 2026 (Meu Álbum)
+
+  BRASIL (2)
+  2, 14×2
+  ```
+
+- **Vários álbuns.** Um por pessoa, com nome próprio e progresso separado. Dá para criar, renomear, excluir (com confirmação) e trocar de álbum pelo seletor do topo.
+- **Busca sem acento.** Por jogador, seleção ou número: "vini", "japão", "CC1" ou "BRA 3".
+- **Prévia em miniatura.** No computador, com o mouse sobre o cartão de uma seleção, aparece a grade das 20 figurinhas com as que já foram coladas.
+- **Teclado.** Cartões, figurinhas e itens dos menus respondem a Tab, Enter e Espaço, e o leitor de tela ouve o nome e se a figurinha está colada ou faltando.
+- **Instalável.** Tem manifesto e ícones próprios para adicionar à tela inicial do celular e abrir como app, sem a barra do navegador. Não tem service worker, então o site publicado precisa de internet para abrir.
+
+> O app usa as bandeiras reais das seleções, do [flag-icons](https://github.com/lipis/flag-icons), e os códigos da FIFA (BRA, ARG, GER), mas não reproduz brasões de federações nem fotos de jogadores, que têm direitos de imagem. O visual é próprio, não uma cópia do álbum da Panini.
+
+## Como foi feito
+
+| Escolha | Por quê |
+|---|---|
+| HTML, CSS e JavaScript, sem framework e sem build | São três telas e um estado pequeno. O GitHub Pages publica a `main` como ela está, e o app roda em qualquer servidor estático ou até sem servidor. |
+| Rotas no hash da URL (`#/`, `#/team/brazil`, `#/trade`, `#/trade/faltam`) | O GitHub Pages só entrega arquivos. Com o hash, cada tela tem endereço próprio e o botão voltar funciona, sem nenhuma regra no servidor. |
+| `localStorage` | Sem conta e sem backend: todos os álbuns ficam num JSON só, na chave `wc2026-album-v3`. |
+| Dados em `data.js` e bandeiras em `flags.js` | Carregados por `<script>` como constantes, funcionam até no `file://`. As 48 bandeiras do flag-icons vão embutidas em SVG, sem pedir nada a outro servidor. |
+| Variáveis CSS por seleção (`--c1` e `--c2`) | Cada seleção tem duas cores no `data.js`, e o cartão, o cabeçalho e as figurinhas coladas usam essas cores sem uma regra de CSS para cada time. |
+| Manifesto web | Nome, cores e ícones, incluindo o ícone adaptável do Android, para instalar o app na tela inicial. |
+
+```mermaid
+flowchart LR
+    U["URL com hash<br/>#/ · #/team/brazil · #/trade"] -->|"hashchange"| R["route()"]
+    D["data.js e flags.js<br/>992 figurinhas e 48 bandeiras"] --> telas
+    R --> telas
+    subgraph telas["telas do app.js"]
+        H["renderHome()<br/>grupos e totais"]
+        T["renderTeam()<br/>as 20 figurinhas"]
+        X["renderTrade()<br/>repetidas e faltantes"]
+    end
+    T -->|"colar e repetidas"| S["state<br/>todos os álbuns"]
+    S <-->|"JSON"| L[("localStorage")]
+    X -->|"Copiar lista"| C["área de transferência"]
+```
+
+Cada toque muda o `state`, grava o JSON inteiro no `localStorage` e redesenha só o que mudou: na página da seleção, a grade, o cabeçalho e a barra do topo.
+
+### Decisões técnicas e o que eu aprendi
+
+- **Só o que foi marcado vai para o estado.** Uma figurinha sem marca e sem repetida sai do objeto, então um álbum novo é `{}` e o JSON cresce com o que foi colado, não com as 992.
+- **Repetida depende de colada.** O contador só aparece em figurinha colada, e descolar zera as repetidas. Um bug antigo fazia o clique no contador descolar a figurinha. Agora o clique no contador para nele, com o `stopPropagation()`.
+- **A ordem do álbum, não a do alfabeto.** As listas de troca percorrem as seleções e as figurinhas na ordem dos dados. Ordenar por texto punha a 10 antes da 2.
+- **Aspas no `onclick`.** Os números das especiais são texto ("00", "FWC1", "CC1") e quebravam o `onclick` montado no HTML. A função `jsNo()` passa esses números entre aspas escapadas.
+- **Mudar o formato sem perder o progresso.** O estado passou de um álbum só (chaves `wc2026-album-v1` e `-v2`) para vários álbuns (`-v3`). Na primeira abertura da versão nova, as figurinhas da antiga viram o "Meu Álbum".
+- **Teclado com um listener só.** Cartões e figurinhas são `div` com `role="button"` e `tabindex="0"`, e um único listener no `document` transforma Enter e Espaço em clique.
+
+<details>
+<summary>Estrutura de pastas</summary>
+
+```
+.
+├── index.html          # a página: topo com busca, seletor de álbuns e barra de progresso
+├── style.css           # o visual: tema escuro, cores por seleção e layout do celular
+├── app.js              # estado, rotas, telas, busca, prévia e listas de troca
+├── data.js             # as 48 seleções, as 20 especiais e as 12 da Coca-Cola
+├── flags.js            # as 48 bandeiras do flag-icons, em SVG embutido
+├── manifest.json       # nome, cores e ícones para instalar na tela inicial
+├── favicon.png, apple-touch-icon.png e icon-*.png
+├── LICENSE
+└── .github/
+    ├── banner.svg, banner-mobile.svg e social-preview.png
+    └── capturas/       # GIF e capturas deste README
+```
+
+</details>
+
+## Testes e qualidade
+
+O projeto não tem testes automatizados nem lint. A única automação é o `pages-build-deployment`, o workflow que o próprio GitHub Pages roda a cada push na `main` para publicar o site. É o status dele que aparece no badge.
+
+Para este README, conferi o app no Chromium, com o Playwright, a partir de um clone limpo:
+
+- os dados somam 992 figurinhas (48 × 20 + 20 + 12), sem número repetido dentro de uma seleção, e as 48 seleções têm bandeira;
+- colar, contar repetidas, as duas listas de troca e o texto copiado;
+- a busca, os vários álbuns e a prévia em miniatura;
+- o app aberto pelo `file://` e sem internet;
+- nenhum erro no console.
+
+Nessa revisão apareceram os bugs que abrem a lista de próximos passos.
+
+## Próximos passos
+
+- [ ] Fazer a busca achar o código como ele aparece na tela: "BRA 03" não encontra nada, porque a busca compara com "BRA 3".
+- [ ] Devolver o foco à figurinha depois de colar pelo teclado: a grade é redesenhada e o foco volta para o começo da página.
+- [ ] Escapar as aspas no nome do álbum: renomear `Álbum do "Zé"` abre o campo só com `Álbum do `.
+- [ ] Tirar o `maximum-scale=1` da meta viewport, que impede o zoom com os dedos no celular.
+- [ ] Trocar "Álbuns completos" por "Seleções completas" na tela inicial: o número conta seleções, e "álbum" já é o nome de cada pessoa.
+- [ ] Usar no `og:image` um endereço completo e uma imagem de compartilhamento: hoje é `icon-512.png`, com caminho relativo, e o protocolo Open Graph pede o endereço completo.
+- [ ] Um service worker para o site publicado abrir sem internet.
+- [ ] Testes automatizados do estado (colar, repetidas e a migração das versões antigas) e uma CI que rode esses testes.
+
+## Autor
+
+Isaac Gomes de Moraes · [LinkedIn](https://www.linkedin.com/in/isaacgomesmoraes/) · [e-mail](mailto:isaacgm260653@gmail.com) · [GitHub](https://github.com/IsaacGomes260653)
+
+## Licença
+
+O código está sob a licença [MIT](LICENSE). As bandeiras vêm do [flag-icons](https://github.com/lipis/flag-icons) (MIT). Copa do Mundo, FIFA, Panini e Coca-Cola são marcas dos seus donos. Este é um projeto pessoal, sem vínculo com elas.
 
 ---
 
-# 🏆 My Album — 2026 FIFA World Cup (English)
+## English summary
 
-A digital sticker-album organizer for the 2026 FIFA World Cup, built to solve a classic collector problem: you can't always carry the physical album around to check what you're missing before agreeing to a trade.
+**Meu Álbum da Copa** is a digital tracker for the 2026 FIFA World Cup sticker album: mark the stickers you already have, count your duplicates and copy the list of what you are missing before a trade. **[Open the album](https://isaacgomes260653.github.io/Album-da-copa/)** (Portuguese interface, no sign-up: progress is saved in your browser).
 
-The app mirrors the **real album structure**: **992 stickers** — 20 per team (48 teams), 20 specials (emblem, mascot, official ball, host cities, World Cup history) and the exclusive **12-sticker Coca-Cola spread** — in the same order and numbering as the physical album: sticker #1 for each team is the (foil) crest slot, #2–12 and #14–20 are players **ordered by position** (goalkeeper → defender → midfielder → forward), and #13 is the official team photo slot.
+- **The whole album:** 992 stickers in the album's numbering: 48 teams in 12 groups with 20 stickers each, 20 specials and the 12 Coca-Cola stickers.
+- **Trading:** duplicate and missing lists across every team, with a "copy list" button that produces a short text per team, ready to paste into a chat.
+- **More:** several albums (one per person), accent-insensitive search, a hover preview of each team, keyboard support and a web manifest to add it to the home screen.
+- **Stack:** plain HTML, CSS and JavaScript with no framework, build step or dependencies; hash routing and `localStorage`, published on GitHub Pages. There are no automated tests yet; the known bugs are listed under "Próximos passos".
 
-> **On imagery:** the app uses **real national flags** (via [flag-icons](https://github.com/lipis/flag-icons), MIT-licensed open source) and official FIFA codes (e.g. BRA, ARG, GER), but does not reproduce federation crests or real player photos — those assets are copyrighted / image-rights protected. The visual style (dark background with a mix of national colors, per-team pages) is an original design, not a copy of the official Panini album.
-
-## ✨ Features
-
-- **Multiple albums:** create one album per person (e.g. one per child), each with its own name, switchable from the top-bar selector — progress is tracked independently per album.
-- **Collection tracking:** tap a sticker to mark it as owned; tap again to unmark.
-- **Duplicate management:** every owned sticker gets a `− N +` counter for extra copies you have to trade.
-- **Shareable lists:** two views — **Duplicates** and **Missing** — that aggregate stickers across every team and special, with a "copy list" button (`BRA 03 Name` format, ready to paste into a chat).
-- **Quick preview:** hover a team card on the home screen to see a tiny grid of which stickers you already have, without opening the team page.
-- **Search:** find any player or team by name from the top bar.
-- **Progress tracking:** animated overall progress bar (X/992), per-team completion, and completed-album count.
-- **No account, no internet needed:** data is saved locally in your browser (`localStorage`) — just open and use.
-- **Installable:** ships its own icon and web manifest — add it to your phone's home screen and open it like an app.
-- **Keyboard accessible:** every card and sticker responds to Tab + Enter/Space, with visible focus and screen-reader labels.
-
-## 🚀 Tech stack
-
-Fully static, no build step, no external dependencies:
-- **HTML5 + CSS3** — original design (dark background, vivid per-team colors, hover motion on cards), with each team's colors applied dynamically on its page.
-- **JavaScript (vanilla)** — hash-based routing (`#/`, `#/team/:id`, `#/trade`), multi-album state persisted in `localStorage`.
-- **Data**: each sticker's number, order, and name cross-checked against the official 2026 album's public checklist, including the Coca-Cola spread.
-
-## 🏃 Running it
-
-Just open `index.html` in a browser — works locally or published (e.g. GitHub Pages), no server or install required. Live version: **[open the album](https://isaacgomes260653.github.io/Album-da-copa/)**.
-
-## 📄 License
-
-Code under the [MIT](LICENSE) license. Flags from [flag-icons](https://github.com/lipis/flag-icons) (MIT). World Cup, FIFA, Panini, and Coca-Cola are trademarks of their owners; this is a personal project with no affiliation.
+**Run it:** `git clone https://github.com/IsaacGomes260653/Album-da-copa.git`, then `python -m http.server 8000` inside the folder and open <http://localhost:8000>, or just double-click `index.html`. Code under the [MIT](LICENSE) license; flags from [flag-icons](https://github.com/lipis/flag-icons) (MIT).
