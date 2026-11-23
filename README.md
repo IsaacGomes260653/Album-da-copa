@@ -151,3 +151,22 @@ Para este README, conferi o app no Chromium, com o Playwright, a partir de um cl
 - nenhum erro no console.
 
 Nessa revisão apareceram os bugs que abrem a lista de próximos passos.
+
+## Próximos passos
+
+- [ ] Fazer a busca achar o código como ele aparece na tela: "BRA 03" não encontra nada, porque a busca compara com "BRA 3".
+- [ ] Devolver o foco à figurinha depois de colar pelo teclado: a grade é redesenhada e o foco volta para o começo da página.
+- [ ] Escapar as aspas no nome do álbum: renomear `Álbum do "Zé"` abre o campo só com `Álbum do `.
+- [ ] Tirar o `maximum-scale=1` da meta viewport, que impede o zoom com os dedos no celular.
+- [ ] Trocar "Álbuns completos" por "Seleções completas" na tela inicial: o número conta seleções, e "álbum" já é o nome de cada pessoa.
+- [ ] Usar no `og:image` um endereço completo e uma imagem de compartilhamento: hoje é `icon-512.png`, com caminho relativo, e o protocolo Open Graph pede o endereço completo.
+- [ ] Um service worker para o site publicado abrir sem internet.
+- [ ] Testes automatizados do estado (colar, repetidas e a migração das versões antigas) e uma CI que rode esses testes.
+
+## Autor
+
+Isaac Gomes de Moraes · [LinkedIn](https://www.linkedin.com/in/isaacgomesmoraes/) · [e-mail](mailto:isaacgm260653@gmail.com) · [GitHub](https://github.com/IsaacGomes260653)
+
+## Licença
+
+O código está sob a licença [MIT](LICENSE). As bandeiras vêm do [flag-icons](https://github.com/lipis/flag-icons) (MIT). Copa do Mundo, FIFA, Panini e Coca-Cola são marcas dos seus donos. Este é um projeto pessoal, sem vínculo com elas.
