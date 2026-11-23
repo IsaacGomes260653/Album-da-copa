@@ -38,12 +38,10 @@ Gravado com o Playwright, com o app rodando localmente (`python -m http.server`)
 
 No celular, a busca ganha uma linha própria e as figurinhas ficam em duas colunas:
 
-<table>
-  <tr>
-    <td width="50%" valign="top"><img src=".github/capturas/celular-selecao.png" alt="Página do Brasil numa tela de 390 px: cabeçalho verde e amarelo com 6/20 coladas, 30% e 3 repetidas, e as figurinhas em duas colunas, com o contador de repetidas nas coladas"></td>
-    <td width="50%" valign="top"><img src=".github/capturas/celular-trocas.png" alt="Tela Trocas numa tela de 390 px: aba Repetidas com 3 figurinhas diferentes e 4 repetidas no total, o botão Copiar lista e as repetidas do Brasil e da Argentina com o código, o nome e a quantidade"></td>
-  </tr>
-</table>
+<p align="center">
+  <img src=".github/capturas/celular-selecao.png" width="300" alt="Página do Brasil numa tela de 390 px: cabeçalho verde e amarelo com 6/20 coladas, 30% e 3 repetidas, e as figurinhas em duas colunas, com o contador de repetidas nas coladas">
+  <img src=".github/capturas/celular-trocas.png" width="300" alt="Tela Trocas numa tela de 390 px: aba Repetidas com 3 figurinhas diferentes e 4 repetidas no total, o botão Copiar lista e as repetidas do Brasil e da Argentina com o código, o nome e a quantidade">
+</p>
 
 ## Como rodar em 60 segundos
 
