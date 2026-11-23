@@ -27,3 +27,20 @@
   <a href="#próximos-passos">Próximos passos</a> ·
   <a href="#english-summary">English</a>
 </p>
+
+## Demonstração
+
+<p align="center">
+  <img src=".github/capturas/demo.gif" width="720" alt="Demonstração do Meu Álbum da Copa: a busca por vini leva à página do Brasil, onde as figurinhas 1, 2, 4, 10, 14 e 18 são marcadas como coladas, a 14, de Vinicius Júnior, ganha duas repetidas e a 2, de Alisson, uma; de volta ao álbum, o cartão do Brasil mostra 6/20 e, com o mouse em cima, a prévia das 20 figurinhas; na tela Trocas aparecem as duas repetidas, a lista é copiada e a aba Faltantes mostra as 986 que faltam">
+</p>
+
+Gravado com o Playwright, com o app rodando localmente (`python -m http.server`). Na gravação, o fundo animado ficou parado para o GIF caber em menos de 5 MB; o resto está como no app. O app tem só o tema escuro.
+
+No celular, a busca ganha uma linha própria e as figurinhas ficam em duas colunas:
+
+<table>
+  <tr>
+    <td width="50%" valign="top"><img src=".github/capturas/celular-selecao.png" alt="Página do Brasil numa tela de 390 px: cabeçalho verde e amarelo com 6/20 coladas, 30% e 3 repetidas, e as figurinhas em duas colunas, com o contador de repetidas nas coladas"></td>
+    <td width="50%" valign="top"><img src=".github/capturas/celular-trocas.png" alt="Tela Trocas numa tela de 390 px: aba Repetidas com 3 figurinhas diferentes e 4 repetidas no total, o botão Copiar lista e as repetidas do Brasil e da Argentina com o código, o nome e a quantidade"></td>
+  </tr>
+</table>
