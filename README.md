@@ -44,3 +44,20 @@ No celular, a busca ganha uma linha própria e as figurinhas ficam em duas colun
     <td width="50%" valign="top"><img src=".github/capturas/celular-trocas.png" alt="Tela Trocas numa tela de 390 px: aba Repetidas com 3 figurinhas diferentes e 4 repetidas no total, o botão Copiar lista e as repetidas do Brasil e da Argentina com o código, o nome e a quantidade"></td>
   </tr>
 </table>
+
+## Como rodar em 60 segundos
+
+Precisa do Git e de um servidor de arquivos estáticos. Aqui, o do Python 3.
+
+```bash
+git clone https://github.com/IsaacGomes260653/Album-da-copa.git
+cd Album-da-copa
+python -m http.server 8000
+```
+
+Abra <http://localhost:8000>. Não há dependências nem build: num clone limpo, do `git clone` até o app no ar, levou cerca de 3 segundos (Windows 11 e Python 3.12).
+
+- No macOS e no Linux, o comando pode ser `python3`.
+- Também abre sem servidor, com dois cliques no `index.html`: os dados vêm de arquivos `.js` carregados por `<script>`, e não por `fetch`, então nada é bloqueado no `file://`.
+- Sem internet, o app aberto localmente funciona igual. Só as fontes, que vêm do Google Fonts, dão lugar à fonte do sistema.
+- Cada endereço guarda o seu próprio progresso: o que você marca em `localhost:8000` não aparece no `file://` nem no site publicado.
