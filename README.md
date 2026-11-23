@@ -170,3 +170,16 @@ Isaac Gomes de Moraes · [LinkedIn](https://www.linkedin.com/in/isaacgomesmoraes
 ## Licença
 
 O código está sob a licença [MIT](LICENSE). As bandeiras vêm do [flag-icons](https://github.com/lipis/flag-icons) (MIT). Copa do Mundo, FIFA, Panini e Coca-Cola são marcas dos seus donos. Este é um projeto pessoal, sem vínculo com elas.
+
+---
+
+## English summary
+
+**Meu Álbum da Copa** is a digital tracker for the 2026 FIFA World Cup sticker album: mark the stickers you already have, count your duplicates and copy the list of what you are missing before a trade. **[Open the album](https://isaacgomes260653.github.io/Album-da-copa/)** (Portuguese interface, no sign-up: progress is saved in your browser).
+
+- **The whole album:** 992 stickers in the album's numbering: 48 teams in 12 groups with 20 stickers each, 20 specials and the 12 Coca-Cola stickers.
+- **Trading:** duplicate and missing lists across every team, with a "copy list" button that produces a short text per team, ready to paste into a chat.
+- **More:** several albums (one per person), accent-insensitive search, a hover preview of each team, keyboard support and a web manifest to add it to the home screen.
+- **Stack:** plain HTML, CSS and JavaScript with no framework, build step or dependencies; hash routing and `localStorage`, published on GitHub Pages. There are no automated tests yet; the known bugs are listed under "Próximos passos".
+
+**Run it:** `git clone https://github.com/IsaacGomes260653/Album-da-copa.git`, then `python -m http.server 8000` inside the folder and open <http://localhost:8000>, or just double-click `index.html`. Code under the [MIT](LICENSE) license; flags from [flag-icons](https://github.com/lipis/flag-icons) (MIT).
