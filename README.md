@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <b>Álbum digital das figurinhas da Copa do Mundo 2026: marque o que já colou, conte as repetidas e copie a lista do que falta antes de trocar.</b><br>
+  <b>Álbum digital da Copa 2026: marque o que já colou, conte as repetidas e copie a lista do que falta antes da troca.</b><br>
   Para quem coleciona o álbum e não quer levar o livro para cada troca, e para quem estuda JavaScript sem framework.<br>
   <a href="https://isaacgomes260653.github.io/Album-da-copa/"><b>Abrir o álbum</b></a> · sem cadastro: o progresso fica salvo no próprio navegador
 </p>
@@ -64,7 +64,7 @@ Abra <http://localhost:8000>. Não há dependências nem build: num clone limpo,
 
 - **As 992 figurinhas na numeração do álbum.** São 48 seleções em 12 grupos (A a L), com 20 figurinhas cada: a 1 é o escudo (brilhante), a 13 é a foto oficial da seleção e as outras 18 são jogadores. Depois vêm as 20 especiais, da 00 (selo Panini) à FWC19 (emblema, mascote, bola, sedes e a história das Copas), e as 12 da Coca-Cola, de CC1 a CC12.
 - **Marcar com um toque.** Um toque cola a figurinha, outro descola. A colada ganha um contador de repetidas (`− N +`), e descolar zera as repetidas dela.
-- **Progresso em três lugares:** a barra do topo (X / 992), o cartão de cada seleção (X/20) e os totais da tela inicial: coladas, faltam, repetidas e seleções completas.
+- **Progresso em três lugares.** A barra do topo (X / 992), o cartão de cada seleção (X/20) e os totais da tela inicial: coladas, faltam, repetidas e seleções completas.
 - **Trocas.** Duas listas, Repetidas e Faltantes, juntam todas as seleções e especiais na ordem do álbum, com o código de cada figurinha (BRA 14). O botão **Copiar lista** copia um texto curto, por seleção, pronto para colar numa conversa:
 
   ```
@@ -75,7 +75,7 @@ Abra <http://localhost:8000>. Não há dependências nem build: num clone limpo,
   ```
 
 - **Vários álbuns.** Um por pessoa, com nome próprio e progresso separado. Dá para criar, renomear, excluir (com confirmação) e trocar de álbum pelo seletor do topo.
-- **Busca** por jogador, seleção ou número, sem diferença de acentos: "vini", "japão", "CC1" ou "BRA 3".
+- **Busca sem acento.** Por jogador, seleção ou número: "vini", "japão", "CC1" ou "BRA 3".
 - **Prévia em miniatura.** No computador, com o mouse sobre o cartão de uma seleção, aparece a grade das 20 figurinhas com as que já foram coladas.
 - **Teclado.** Cartões, figurinhas e itens dos menus respondem a Tab, Enter e Espaço, e o leitor de tela ouve o nome e se a figurinha está colada ou faltando.
 - **Instalável.** Tem manifesto e ícones próprios para adicionar à tela inicial do celular e abrir como app, sem a barra do navegador. Não tem service worker, então o site publicado precisa de internet para abrir.
