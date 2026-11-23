@@ -137,3 +137,17 @@ Cada toque muda o `state`, grava o JSON inteiro no `localStorage` e redesenha s�
 ```
 
 </details>
+
+## Testes e qualidade
+
+O projeto não tem testes automatizados nem lint. A única automação é o `pages-build-deployment`, o workflow que o próprio GitHub Pages roda a cada push na `main` para publicar o site. É o status dele que aparece no badge.
+
+Para este README, conferi o app no Chromium, com o Playwright, a partir de um clone limpo:
+
+- os dados somam 992 figurinhas (48 × 20 + 20 + 12), sem número repetido dentro de uma seleção, e as 48 seleções têm bandeira;
+- colar, contar repetidas, as duas listas de troca e o texto copiado;
+- a busca, os vários álbuns e a prévia em miniatura;
+- o app aberto pelo `file://` e sem internet;
+- nenhum erro no console.
+
+Nessa revisão apareceram os bugs que abrem a lista de próximos passos.
